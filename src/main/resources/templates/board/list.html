@@ -1,0 +1,76 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head :: head">
+    </head>
+<body>
+<!--메인 -->
+<div class="main-wrapper">
+    <!--헤더 시작-->
+    <header class="header" th:replace="fragments/header :: header">
+    </header>
+    <!-- 헤더 끝 -->
+        <!-- 테이블 -->
+        <div class="banner d-flex align-items-center">
+            <div class="container">
+            <h2>테스트</h2>
+            <form class="form-inline d-flex justify-content-end" method="GET" th:action="@{/board/list}">
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="searchText" class="sr-only">검색</label>
+                    <input type="text" class="form-control" id="searchText" name="searchText"
+                        th:value="${param.searchText}">
+                </div>
+                <button type="submit" class="btn btn-theme mb-1">검색</button>
+            </form>
+            <table class="table table-sm trr">
+                <thead>
+                    <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">작성자</th>
+                        <th scope="col">게시일</th>   
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="board : ${boards}">
+                        <td th:text="${board.id}"></td>
+                        <td><a th:text="${board.title}" th:href="@{/board/form(id=${board.id})}">임정민</a></td>
+                        <!-- <td><a th:text="${board.title}" th:href="@{/board/write(id=${board.id})}"></a></td> -->
+                        <td>임정민</td>
+                        <td th:text="${board.reg_Date}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" th:classappend="${1 == boards.pageable.pageNumber + 1} ? 'disabled'">
+                        <a class="page-link" href="#"
+                            th:href="@{/board/list(page=${boards.pageable.pageNumber - 1},searchText=${param.searchText})}"
+                            tabindex="-1" aria-disabled="true">이전</a>
+                    </li>
+                    <li class="page-item" th:classappend="${i == boards.pageable.pageNumber + 1} ? 'disabled'" th:each="i : ${#numbers.sequence(startPage, totalPages)}">
+                      <a class="page-link" href="#" th:href="@{/board/list(page=${i - 1},searchText=${param.searchText})}" th:text="${i}">1</a>
+                    </li>
+                  <li class="page-item" th:classappend="${boards.totalPages == boards.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" href="#" th:href="@{/board/list(page=${boards.pageable.pageNumber + 1},searchText=${param.searchText})}">다음</a>
+                  </li>
+                </ul>
+              </nav>
+            <div class="text-right">
+                <a type="button" class="btn btn-theme" th:href="@{/board/form}">테스트 쓰기</a>
+            </div>
+            </div>
+        </div>
+        <!-- 테이블 끝 -->
+    <!--푸터-->
+    <footer class="footer" th:replace="fragments/footer :: footer"> 
+    </footer>
+    <!-- 푸터 끝 -->
+</div>
+<!-- 테마 색 변경 -->
+<div class="style-switcher js-style-switcher" th:replace="fragments/styleSwitcher :: styleSwitcher">
+</div>
+<!-- 테마 색 변경 끝 -->
+<script src="bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script src="main.js" th:src="@{/js/main.js}"></script>
+</body>
+</html>

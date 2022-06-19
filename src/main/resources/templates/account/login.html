@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head :: head">
+    </head>
+<body>
+    <!--메인ddd -->
+    <div class="main-wrapper">
+        <!--헤더 시작-->
+        <header class="header" th:replace="fragments/header :: header">
+        </header>
+        <!-- 헤더 끝 -->
+        <div class="text-center">
+            <form class="form-signin" th:action="@{/account/login}" method="post">
+                <a th:href="@{/}"><img class="mb-5" th:src="@{/image/jeiu.png}" alt="banner img" width="92" height="102"></a>
+                <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                    Invalid username and password.
+                </div>
+                <div th:if="${param.logout}" class="alert alert-primary" role="alert">
+                    You have been logged out.
+                </div>
+                <label for="username" class="sr-only">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+                <!-- <div class="checkbox mb-3">
+                  <label>
+                    <input type="checkbox" value="remember-me"> Remember me
+                  </label>
+                </div> -->
+                <button class="btn btn-theme" type="submit">로그인</button>
+            </form>
+
+        </div>
+        
+    </div>
+        <!-- 테마 색 변경 -->
+        <div class="style-switcher js-style-switcher" th:replace="fragments/styleSwitcher :: styleSwitcher">
+        </div>
+        <!-- 테마 색 변경 끝 -->
+    
+    <script src="bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script src="main.js" th:src="@{/js/main.js}"></script>
+</body>
+</html>

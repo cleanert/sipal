@@ -1,0 +1,51 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head :: head">
+    </head>
+<body>
+<!--메인 -->
+<div class="main-wrapper">
+    <!--헤더 시작-->
+    <header class="header" th:replace="fragments/header :: header">
+    </header>
+    <!-- 헤더 끝 -->
+        <!-- 테이블 -->
+        <div class="banner d-flex align-items-center">
+            <div class="container">
+                <form action="#" th:action="@{/board/form}" th:object="${board}" method="post">
+                <input type="hidden" th:field="*{id}">    
+                <div class="mb-3">
+                    <label for="title">테스트 제목</label>
+                    <input type="text" class="form-control" 
+                        th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'" id="title" th:field="*{title}" placeholder="제목">
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                        제목 오류.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="content">테스트 내용</label>
+                    <textarea class="form-control" 
+                        th:classappend="${#fields.hasErrors('content')} ? 'is-invalid'" id="content" rows="3" th:field="*{content}"></textarea>
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">
+                        내용 오류.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-theme">테스트 확인</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- 테이블 끝 -->
+    <!--푸터-->
+    <footer class="footer" th:replace="fragments/footer :: footer"> 
+    </footer>
+    <!-- 푸터 끝 -->
+</div>
+<!-- 테마 색 변경 -->
+<div class="style-switcher js-style-switcher" th:replace="fragments/styleSwitcher :: styleSwitcher">
+</div>
+<!-- 테마 색 변경 끝 -->
+<script src="bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script src="main.js" th:src="@{/js/main.js}"></script>
+</body>
+</html>
